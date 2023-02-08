@@ -9,5 +9,10 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable=['blog_id','comments'];
+    protected $fillable=['blog_id','comments','parent'];
+
+    public function replays()
+    {
+        return $this->hasMany(Comment::class,'parent','id');
+    }
 }

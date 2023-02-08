@@ -62,4 +62,20 @@ class BlogController extends Controller
 
         return redirect()->route('blogs');
     }
+    public function replays(Request $request,$blog_id,$comment_id)
+    {
+        $blog=decrypt($blog_id);
+        $comment=decrypt($comment_id);
+        
+        $insert_array=array(
+            'blog_id'=>$blog,
+            'comments'=>request('replay'),
+            'parent'=>$comment
+        );
+        //dd($insert_array);
+
+        Comment::create($insert_array);
+
+        return redirect()->route('blogs');
+    }
 }

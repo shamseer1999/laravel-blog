@@ -10,4 +10,9 @@ class Blog extends Model
     use HasFactory;
 
     protected $fillable=['title','description','date','image'];
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class,'blog_id','id')->where('parent','=',0);
+    }
 }
