@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     
+    public function index()
+    {
+        $data['results']=Blog::get();
+        
+        return view('blog.index',$data);
+    }
     public function add(Request $request)
     {
         if($request->isMethod('post'))

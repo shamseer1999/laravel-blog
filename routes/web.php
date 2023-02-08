@@ -14,7 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[BlogController::class,'index'])->name('blogs');
 Route::match(['get','post'],'/add-blog',[BlogController::class,'add'])->name('add_blog');
