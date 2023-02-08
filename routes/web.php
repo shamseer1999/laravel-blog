@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+
+use App\Http\Controllers\LoginController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[BlogController::class,'index'])->name('blogs');
 Route::match(['get','post'],'/add-blog',[BlogController::class,'add'])->name('add_blog');
+Route::match(['get','post'],'/login',[LoginController::class,'login'])->name('do_login');
+
+Route::post('/comments{id}',[BlogController::class,'comments'])->name('comments');

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -12,7 +12,7 @@ class BlogController extends Controller
     public function index()
     {
         $data['results']=Blog::get();
-        
+
         return view('blog.index',$data);
     }
     public function add(Request $request)
@@ -43,9 +43,23 @@ class BlogController extends Controller
 
             Blog::create($insert_data);
 
-            echo "success";
+            return redirect()->route('blogs')->with('success','Blog created successfully');
               
         }
         return view('blog.add');
+    }
+    public function comments(Request $request,$id)
+    {
+        $blog_id=decrypt($id);
+        $comment=request('comment');
+
+        $insert_array=array(
+            'blog_id'=>$blog_id,
+            'comments'=>$comment,
+        );
+
+        Comment::create($insert_array);
+
+        return redirect()->route('blogs');
     }
 }
