@@ -11,7 +11,9 @@ class BlogController extends Controller
     
     public function index()
     {
-        $data['results']=Blog::get();
+        $data['results']=Blog::paginate(3);
+        $data['titles']="";
+       // dd($data['results']);
 
         return view('blog.index',$data);
     }
@@ -46,7 +48,8 @@ class BlogController extends Controller
             return redirect()->route('blogs')->with('success','Blog created successfully');
               
         }
-        return view('blog.add');
+        $data['titles']="| Add";
+        return view('blog.add',$data);
     }
     public function comments(Request $request,$id)
     {
@@ -77,5 +80,15 @@ class BlogController extends Controller
         Comment::create($insert_array);
 
         return redirect()->route('blogs');
+    }
+    public function view_all(Request $request,$id)
+    {
+        $blog_id=decrypt($id);
+        
+        $blog=Blog::find($blog_id);
+        
+        $data['results']=$blog;
+        $data['titles']="| Blog";
+        return view('blog.view_all',$data);
     }
 }

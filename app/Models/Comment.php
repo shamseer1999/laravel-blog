@@ -13,6 +13,10 @@ class Comment extends Model
 
     public function replays()
     {
+        return $this->hasMany(Comment::class,'parent','id')->limit(2);
+    }
+    public function all_replays()
+    {
         return $this->hasMany(Comment::class,'parent','id');
     }
 }

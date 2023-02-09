@@ -21,5 +21,12 @@ Route::get('/',[BlogController::class,'index'])->name('blogs');
 Route::match(['get','post'],'/add-blog',[BlogController::class,'add'])->name('add_blog');
 Route::match(['get','post'],'/login',[LoginController::class,'login'])->name('do_login');
 
-Route::post('/comments{id}',[BlogController::class,'comments'])->name('comments');
-Route::post('/replays/{blog_id}/{comment_id}',[BlogController::class,'replays'])->name('replays');
+Route::post('/comments{id}',[BlogController::class,'comments'])->name('comments')->middleware('logged_user');
+Route::post('/replays/{blog_id}/{comment_id}',[BlogController::class,'replays'])->name('replays')->middleware('logged_user');
+
+Route::get('/getall-comments{id}',[BlogController::class,'view_all'])->name('view_all');
+Route::get('/logout',function(){
+    auth()->logout();
+
+    return redirect()->route('do_login');
+})->name('logout');

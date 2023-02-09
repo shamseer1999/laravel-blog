@@ -10,33 +10,33 @@
 <div class="card mt-2">
     <div class="card-header">
       Blogs
-      <a href="{{route('add_blog')}}" class="btn btn-sm btn-primary" style="float:right;">Create Blog</a>
+      {{-- <a href="{{route('logout')}}">Logout</a> --}}
     </div>
     <div class="card-body">
         @if (!empty($results))
-            @foreach ($results as $item)
+            
             <div class="row">
                 <div class="col-lg-12">
-                    <h3>{{$item->title}}</h3>
-                    <img src="{{asset('storage/'.$item->image)}}" alt="blog-image">
-                    <p>{{$item->description}}</p>
-                    <p><small>Posted on :{{$item->date}}</small><label class="ms-2"><small><a id="comment" class="text-secondary">Add a comment</a></small></label></p>
+                    <h3>{{$results->title}}</h3>
+                    <img src="{{asset('storage/'.$results->image)}}" alt="blog-image">
+                    <p>{{$results->description}}</p>
+                    <p><small>Posted on :{{$results->date}}</small><label class="ms-2"><small><a id="comment" class="text-secondary">Add a comment</a></small></label></p>
                     <div style="display:none;" id="comment_box">
-                        <form action="{{route('comments',encrypt($item->id))}}" method="post">
+                        <form action="{{route('comments',encrypt($results->id))}}" method="post">
                             @csrf
                             <textarea class="form-control border-primary" name="comment" id="" cols="10" rows="3" placeholder="Add comments here..."></textarea>
                             <button type="submit" class="btn btn-md btn-default">Comment</button>
                         </form>
                     </div>
-                    @if(!empty($item->comment))
+                    @if(!empty($results->all_comments))
                     <p><small><u>Comments</u></small></p>
-                        @foreach ($item->comment as $value)
+                        @foreach ($results->all_comments as $value)
                         <div class="card">
                             <div class="card-header">
                                 <p>{{$value->comments}}</p>
                                 <small><a id="replay_comment{{$value->id}}" onclick="replay_comment({{$value->id}})" class="text-secondary">Replay comment</a></small>
                                 <div style="display:none;" id="replay_comment_box{{$value->id}}">
-                                    <form action="{{route('replays',['blog_id'=>encrypt($item->id),'comment_id'=>encrypt($value->id)])}}" method="post">
+                                    <form action="{{route('replays',['blog_id'=>encrypt($results->id),'comment_id'=>encrypt($value->id)])}}" method="post">
                                         @csrf
                                         <textarea class="form-control border-primary" name="replay" id="" cols="10" rows="3" placeholder="Add your replays here..."></textarea>
                                         <button type="submit" class="btn btn-md btn-default">Replay</button>
@@ -44,8 +44,8 @@
                                 </div>
                             </div>
                         </div>
-                        @if (!empty($value->replays))
-                                @foreach ($value->replays as $replay)
+                        @if (!empty($value->all_replays))
+                                @foreach ($value->all_replays as $replay)
                                 <div class="card ms-3">
                                     <div class="card-header">
                                         <p>{{$replay->comments}}</p>
@@ -63,11 +63,11 @@
                             @endif
                             
                         @endforeach
-                        <a href="{{route('view_all',encrypt($item->id))}}">View all comments</a>
+                        
                     @endif
                 </div>
             </div> 
-            @endforeach
+            
         @endif
       
     </div>

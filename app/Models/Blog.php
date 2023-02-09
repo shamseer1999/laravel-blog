@@ -13,6 +13,10 @@ class Blog extends Model
 
     public function comment()
     {
+        return $this->hasMany(Comment::class,'blog_id','id')->where('parent','=',0)->limit(3);
+    }
+    public function all_comments()
+    {
         return $this->hasMany(Comment::class,'blog_id','id')->where('parent','=',0);
     }
 }
