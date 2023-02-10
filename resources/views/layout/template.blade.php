@@ -27,6 +27,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('add_blog')}}">Add Blog</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('do_login')}}">Login</a>
+                </li>
                 
               </ul>
             </div>
