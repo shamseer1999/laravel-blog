@@ -27,9 +27,15 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('add_blog')}}">Add Blog</a>
                 </li>
+                @if(auth()->check())
+                <li class="nav-item">
+                  <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                </li>
+                @else
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('do_login')}}">Login</a>
                 </li>
+                @endif
                 
               </ul>
             </div>
